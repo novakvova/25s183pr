@@ -1,0 +1,34 @@
+﻿@model WebApplication3.Models.UserDetailViewModel
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<h2>UserProfile</h2>
+
+<div>
+    <h4>Count Posts<b>@Model.Posts.Count()</b></h4>
+    <hr />
+
+    <div>
+        @foreach (var post in Model.Posts)
+        {
+            <p>@post.PostId @post.PostName <br /></p>
+        }
+    </div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

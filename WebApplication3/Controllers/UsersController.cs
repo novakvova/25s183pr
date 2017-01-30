@@ -36,7 +36,72 @@ namespace WebApplication3.Controllers
                                                   };
             return View(listUsers);            
         }
+        //user profile
+        [Authorize]
+        public ActionResult UserProfile()
+        {
+            var userEmail = User.Identity.Name;
+            var user=repository.FindUserByEmail(userEmail);
+            UserDetailViewModel model = new UserDetailViewModel()
+            {
+                Email = user.Email, ID = user.Id,
+                Posts=user.Posts.Select(p=>new PostItemViewModel() {PostId=p.Id, PostName=p.Name })
+            };
 
+            return View(model);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        public ActionResult AddUserToPost()// GET: Users
+        {
+            Context context = new Context();
+            AddUserToPostViewModel model = new AddUserToPostViewModel();
+            //Заповнити всі пости
+            model.ListPosts = context.Posts.Select(p => new ListBoxItems() { Id = p.Id, Name = p.Name });
+            //Заповнити всі юзери
+            model.ListUsers = context.Users.Select(p => new ListBoxItems() { Id = p.Id, Name = p.UserProfile.LastName+" "+ p.UserProfile.Name });
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult AddUserToPost(AddUserToPostViewModel model)// GET: Users
+        {
+            Context context = new Context();
+            if(ModelState.IsValid)
+            {
+                Post findPost = context.Posts.SingleOrDefault(p => p.Id == model.PostIdSected);
+                if(findPost!=null)
+                {
+                    User findUser = context.Users.SingleOrDefault(u => u.Id == model.UserIdSected);
+                    if(findUser!=null)
+                    {
+                        findPost.Users.Add(findUser);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            //Заповнити всі пости
+            model.ListPosts = context.Posts.Select(p => new ListBoxItems() { Id = p.Id, Name = p.Name });
+            //Заповнити всі юзери
+            model.ListUsers = context.Users.Select(p => new ListBoxItems() { Id = p.Id, Name = p.UserProfile.LastName + " " + p.UserProfile.Name });
+            return View(model);
+        }
+        /*
+        //[Authorize(Roles = "Admin")]
+        public ActionResult AddRoleToUser()// GET: Users
+        {
+
+        }
+        //[Authorize(Roles = "Admin")]
+        public ActionResult AddRoleToUser()// GET: Users
+        {
+
+        }
+        //[Authorize(Roles = "Admin")]
+        public ActionResult AddRoleToPost()// GET: Users
+        {
+
+        }
+        */
         public ActionResult Create()
         {
             CreateUserViewModel model = new CreateUserViewModel();
@@ -122,10 +187,6 @@ namespace WebApplication3.Controllers
             repository.AddRole(model.Name);
             return RedirectToAction("Index", "Users");
         }
-        class ListBoxItems
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-        }
+        
     }
 }

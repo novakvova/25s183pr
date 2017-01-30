@@ -20,6 +20,9 @@ namespace WebApplication3.Controllers
             //IDbContext context = new Context();
             repository = new PostRepository(context);
         }
+
+        //admin profile
+        //[Authorize(Roles = "Admin")]
         public ActionResult Index()// GET: Users
         {
             
@@ -34,5 +37,9 @@ namespace WebApplication3.Controllers
             return View(model);
         }
 
-    }
+
+
+
+
+        }
 }

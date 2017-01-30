@@ -139,9 +139,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddUserToPostViewModel.cs" />
     <Compile Include="Models\CreateUserViewModel.cs" />
+    <Compile Include="Models\ListBoxItems.cs" />
+    <Compile Include="Models\PostItemViewModel.cs" />
     <Compile Include="Models\PostViewModel.cs" />
     <Compile Include="Models\UserEditViewModel.cs" />
+    <Compile Include="Models\UserDetailViewModel.cs" />
     <Compile Include="Models\UserInfoViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,6 +194,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Users\AddRole.cshtml" />
     <Content Include="Views\Post\Index.cshtml" />
+    <Content Include="Views\Users\UserProfile.cshtml" />
+    <Content Include="Views\Users\AddUserToPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

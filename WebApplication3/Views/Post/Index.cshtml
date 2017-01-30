@@ -30,7 +30,14 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PostName)
-            &nbsp;<b>@item.Users.Count()</b>
+            Count users<b>@item.Users.Count()</b>
+            &nbsp;<br /><b>
+            @foreach(var user in item.Users)
+            {
+                <p>@user.Email</p>
+            }
+
+            </b>
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
